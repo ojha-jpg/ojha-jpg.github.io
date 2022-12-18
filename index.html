@@ -8,10 +8,9 @@
         <meta name="apple-mobile-web-app-capable" content="yes">
         <link rel="stylesheet" href="css/leaflet.css">
         <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
-        <link rel="stylesheet" href="css/leaflet-control-geocoder.Geocoder.css">
         <style>
         #map {
-            width: 1523px;
+            width: 1461px;
             height: 827px;
         }
         </style>
@@ -29,12 +28,16 @@
         <script src="js/rbush.min.js"></script>
         <script src="js/labelgun.min.js"></script>
         <script src="js/labels.js"></script>
-        <script src="js/leaflet-control-geocoder.Geocoder.js"></script>
-        <script src="data/sewer_zone_1.js"></script>
+        <script src="data/RiskMap2yrsreturnperiod_1.js"></script>
         <script>
+        var highlightLayer;
+        function highlightFeature(e) {
+            highlightLayer = e.target;
+            highlightLayer.openPopup();
+        }
         var map = L.map('map', {
             zoomControl:true, maxZoom:28, minZoom:1
-        }).fitBounds([[27.645061040753106,85.2754491809172],[27.708312492032118,85.40419698265002]]);
+        }).fitBounds([[27.66050794069053,85.28571883774902],[27.686459868240032,85.33644093692102]]);
         var hash = new L.Hash(map);
         map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
         var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
@@ -54,654 +57,110 @@
         });
         layer_OpenStreetMap_0;
         map.addLayer(layer_OpenStreetMap_0);
-        function pop_sewer_zone_1(feature, layer) {
+        function pop_RiskMap2yrsreturnperiod_1(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
             var popupContent = '<table>\
                     <tr>\
-                        <td colspan="2">' + (feature.properties['gid'] !== null ? autolinker.link(feature.properties['gid'].toLocaleString()) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['NAME'] !== null ? autolinker.link(feature.properties['NAME'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <td colspan="2">' + (feature.properties['objectid'] !== null ? autolinker.link(feature.properties['objectid'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['shape_leng'] !== null ? autolinker.link(feature.properties['shape_leng'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['remark'] !== null ? autolinker.link(feature.properties['remark'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['shape_le_1'] !== null ? autolinker.link(feature.properties['shape_le_1'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['shape_area'] !== null ? autolinker.link(feature.properties['shape_area'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['zone_id'] !== null ? autolinker.link(feature.properties['zone_id'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['subzone_id'] !== null ? autolinker.link(feature.properties['subzone_id'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['area_skm'] !== null ? autolinker.link(feature.properties['area_skm'].toLocaleString()) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['DESCRIPT'] !== null ? autolinker.link(feature.properties['DESCRIPT'].toLocaleString()) : '') + '</td>\
                     </tr>\
                 </table>';
             layer.bindPopup(popupContent, {maxHeight: 400});
         }
 
-        function style_sewer_zone_1_0(feature) {
-            switch(String(feature.properties['gid'])) {
+        function style_RiskMap2yrsreturnperiod_1_0(feature) {
+            switch(String(feature.properties['NAME'])) {
                 default:
                     return {
-                pane: 'pane_sewer_zone_1',
+                pane: 'pane_RiskMap2yrsreturnperiod_1',
                 opacity: 1,
-                color: 'rgba(35,35,35,0.4)',
+                color: 'rgba(35,35,35,1.0)',
                 dashArray: '',
                 lineCap: 'butt',
                 lineJoin: 'miter',
                 weight: 1.0, 
                 fill: true,
                 fillOpacity: 1,
-                fillColor: 'rgba(192,83,232,0.4)',
+                fillColor: 'rgba(147,234,100,1.0)',
                 interactive: true,
             }
                     break;
-                case '1':
+                case 'high risk':
                     return {
-                pane: 'pane_sewer_zone_1',
+                pane: 'pane_RiskMap2yrsreturnperiod_1',
                 opacity: 1,
-                color: 'rgba(35,35,35,0.4)',
+                color: 'rgba(247,247,247,1.0)',
                 dashArray: '',
                 lineCap: 'butt',
                 lineJoin: 'miter',
                 weight: 1.0, 
                 fill: true,
                 fillOpacity: 1,
-                fillColor: 'rgba(44,209,32,0.4)',
+                fillColor: 'rgba(255,66,3,1.0)',
                 interactive: true,
             }
                     break;
-                case '2':
+                case 'low risk':
                     return {
-                pane: 'pane_sewer_zone_1',
+                pane: 'pane_RiskMap2yrsreturnperiod_1',
                 opacity: 1,
-                color: 'rgba(35,35,35,0.4)',
+                color: 'rgba(35,35,35,1.0)',
                 dashArray: '',
                 lineCap: 'butt',
                 lineJoin: 'miter',
                 weight: 1.0, 
                 fill: true,
                 fillOpacity: 1,
-                fillColor: 'rgba(142,69,201,0.4)',
+                fillColor: 'rgba(45,142,61,1.0)',
                 interactive: true,
             }
                     break;
-                case '3':
+                case 'med risk':
                     return {
-                pane: 'pane_sewer_zone_1',
+                pane: 'pane_RiskMap2yrsreturnperiod_1',
                 opacity: 1,
-                color: 'rgba(35,35,35,0.4)',
+                color: 'rgba(35,35,35,1.0)',
                 dashArray: '',
                 lineCap: 'butt',
                 lineJoin: 'miter',
                 weight: 1.0, 
                 fill: true,
                 fillOpacity: 1,
-                fillColor: 'rgba(40,161,78,0.4)',
-                interactive: true,
-            }
-                    break;
-                case '4':
-                    return {
-                pane: 'pane_sewer_zone_1',
-                opacity: 1,
-                color: 'rgba(35,35,35,0.4)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(76,155,141,0.4)',
-                interactive: true,
-            }
-                    break;
-                case '5':
-                    return {
-                pane: 'pane_sewer_zone_1',
-                opacity: 1,
-                color: 'rgba(35,35,35,0.4)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(60,207,24,0.4)',
-                interactive: true,
-            }
-                    break;
-                case '6':
-                    return {
-                pane: 'pane_sewer_zone_1',
-                opacity: 1,
-                color: 'rgba(35,35,35,0.4)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(224,249,84,0.4)',
-                interactive: true,
-            }
-                    break;
-                case '7':
-                    return {
-                pane: 'pane_sewer_zone_1',
-                opacity: 1,
-                color: 'rgba(35,35,35,0.4)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(82,213,209,0.4)',
-                interactive: true,
-            }
-                    break;
-                case '8':
-                    return {
-                pane: 'pane_sewer_zone_1',
-                opacity: 1,
-                color: 'rgba(35,35,35,0.4)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(54,238,251,0.4)',
-                interactive: true,
-            }
-                    break;
-                case '9':
-                    return {
-                pane: 'pane_sewer_zone_1',
-                opacity: 1,
-                color: 'rgba(35,35,35,0.4)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(228,23,187,0.4)',
-                interactive: true,
-            }
-                    break;
-                case '10':
-                    return {
-                pane: 'pane_sewer_zone_1',
-                opacity: 1,
-                color: 'rgba(35,35,35,0.4)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(143,21,21,0.4)',
-                interactive: true,
-            }
-                    break;
-                case '11':
-                    return {
-                pane: 'pane_sewer_zone_1',
-                opacity: 1,
-                color: 'rgba(35,35,35,0.4)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(220,89,124,0.4)',
-                interactive: true,
-            }
-                    break;
-                case '12':
-                    return {
-                pane: 'pane_sewer_zone_1',
-                opacity: 1,
-                color: 'rgba(35,35,35,0.4)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(198,18,141,0.4)',
-                interactive: true,
-            }
-                    break;
-                case '13':
-                    return {
-                pane: 'pane_sewer_zone_1',
-                opacity: 1,
-                color: 'rgba(35,35,35,0.4)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(168,86,142,0.4)',
-                interactive: true,
-            }
-                    break;
-                case '14':
-                    return {
-                pane: 'pane_sewer_zone_1',
-                opacity: 1,
-                color: 'rgba(35,35,35,0.4)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(15,18,180,0.4)',
-                interactive: true,
-            }
-                    break;
-                case '15':
-                    return {
-                pane: 'pane_sewer_zone_1',
-                opacity: 1,
-                color: 'rgba(35,35,35,0.4)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(88,207,112,0.4)',
-                interactive: true,
-            }
-                    break;
-                case '16':
-                    return {
-                pane: 'pane_sewer_zone_1',
-                opacity: 1,
-                color: 'rgba(35,35,35,0.4)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(30,142,198,0.4)',
-                interactive: true,
-            }
-                    break;
-                case '17':
-                    return {
-                pane: 'pane_sewer_zone_1',
-                opacity: 1,
-                color: 'rgba(35,35,35,0.4)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(144,89,84,0.4)',
-                interactive: true,
-            }
-                    break;
-                case '18':
-                    return {
-                pane: 'pane_sewer_zone_1',
-                opacity: 1,
-                color: 'rgba(35,35,35,0.4)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(103,31,186,0.4)',
-                interactive: true,
-            }
-                    break;
-                case '19':
-                    return {
-                pane: 'pane_sewer_zone_1',
-                opacity: 1,
-                color: 'rgba(35,35,35,0.4)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(182,92,121,0.4)',
-                interactive: true,
-            }
-                    break;
-                case '20':
-                    return {
-                pane: 'pane_sewer_zone_1',
-                opacity: 1,
-                color: 'rgba(35,35,35,0.4)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(212,122,32,0.4)',
-                interactive: true,
-            }
-                    break;
-                case '21':
-                    return {
-                pane: 'pane_sewer_zone_1',
-                opacity: 1,
-                color: 'rgba(35,35,35,0.4)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(167,10,167,0.4)',
-                interactive: true,
-            }
-                    break;
-                case '22':
-                    return {
-                pane: 'pane_sewer_zone_1',
-                opacity: 1,
-                color: 'rgba(35,35,35,0.4)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(141,64,51,0.4)',
-                interactive: true,
-            }
-                    break;
-                case '23':
-                    return {
-                pane: 'pane_sewer_zone_1',
-                opacity: 1,
-                color: 'rgba(35,35,35,0.4)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(48,227,138,0.4)',
-                interactive: true,
-            }
-                    break;
-                case '24':
-                    return {
-                pane: 'pane_sewer_zone_1',
-                opacity: 1,
-                color: 'rgba(35,35,35,0.4)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(41,217,120,0.4)',
-                interactive: true,
-            }
-                    break;
-                case '25':
-                    return {
-                pane: 'pane_sewer_zone_1',
-                opacity: 1,
-                color: 'rgba(35,35,35,0.4)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(136,239,120,0.4)',
-                interactive: true,
-            }
-                    break;
-                case '26':
-                    return {
-                pane: 'pane_sewer_zone_1',
-                opacity: 1,
-                color: 'rgba(35,35,35,0.4)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(170,173,78,0.4)',
-                interactive: true,
-            }
-                    break;
-                case '27':
-                    return {
-                pane: 'pane_sewer_zone_1',
-                opacity: 1,
-                color: 'rgba(35,35,35,0.4)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(59,237,110,0.4)',
-                interactive: true,
-            }
-                    break;
-                case '28':
-                    return {
-                pane: 'pane_sewer_zone_1',
-                opacity: 1,
-                color: 'rgba(35,35,35,0.4)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(85,142,132,0.4)',
-                interactive: true,
-            }
-                    break;
-                case '29':
-                    return {
-                pane: 'pane_sewer_zone_1',
-                opacity: 1,
-                color: 'rgba(35,35,35,0.4)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(106,54,141,0.4)',
-                interactive: true,
-            }
-                    break;
-                case '30':
-                    return {
-                pane: 'pane_sewer_zone_1',
-                opacity: 1,
-                color: 'rgba(35,35,35,0.4)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(155,10,10,0.4)',
-                interactive: true,
-            }
-                    break;
-                case '31':
-                    return {
-                pane: 'pane_sewer_zone_1',
-                opacity: 1,
-                color: 'rgba(35,35,35,0.4)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(135,226,164,0.4)',
-                interactive: true,
-            }
-                    break;
-                case '32':
-                    return {
-                pane: 'pane_sewer_zone_1',
-                opacity: 1,
-                color: 'rgba(35,35,35,0.4)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(138,28,148,0.4)',
-                interactive: true,
-            }
-                    break;
-                case '33':
-                    return {
-                pane: 'pane_sewer_zone_1',
-                opacity: 1,
-                color: 'rgba(35,35,35,0.4)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(219,68,196,0.4)',
-                interactive: true,
-            }
-                    break;
-                case '34':
-                    return {
-                pane: 'pane_sewer_zone_1',
-                opacity: 1,
-                color: 'rgba(35,35,35,0.4)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(34,36,173,0.4)',
-                interactive: true,
-            }
-                    break;
-                case '35':
-                    return {
-                pane: 'pane_sewer_zone_1',
-                opacity: 1,
-                color: 'rgba(35,35,35,0.4)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(48,152,111,0.4)',
-                interactive: true,
-            }
-                    break;
-                case '36':
-                    return {
-                pane: 'pane_sewer_zone_1',
-                opacity: 1,
-                color: 'rgba(35,35,35,0.4)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(153,70,235,0.4)',
-                interactive: true,
-            }
-                    break;
-                case '37':
-                    return {
-                pane: 'pane_sewer_zone_1',
-                opacity: 1,
-                color: 'rgba(35,35,35,0.4)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(51,209,220,0.4)',
-                interactive: true,
-            }
-                    break;
-                case '38':
-                    return {
-                pane: 'pane_sewer_zone_1',
-                opacity: 1,
-                color: 'rgba(35,35,35,0.4)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(36,26,222,0.4)',
+                fillColor: 'rgba(255,195,17,1.0)',
                 interactive: true,
             }
                     break;
             }
         }
-        map.createPane('pane_sewer_zone_1');
-        map.getPane('pane_sewer_zone_1').style.zIndex = 401;
-        map.getPane('pane_sewer_zone_1').style['mix-blend-mode'] = 'normal';
-        var layer_sewer_zone_1 = new L.geoJson(json_sewer_zone_1, {
+        map.createPane('pane_RiskMap2yrsreturnperiod_1');
+        map.getPane('pane_RiskMap2yrsreturnperiod_1').style.zIndex = 401;
+        map.getPane('pane_RiskMap2yrsreturnperiod_1').style['mix-blend-mode'] = 'normal';
+        var layer_RiskMap2yrsreturnperiod_1 = new L.geoJson(json_RiskMap2yrsreturnperiod_1, {
             attribution: '',
             interactive: true,
-            dataVar: 'json_sewer_zone_1',
-            layerName: 'layer_sewer_zone_1',
-            pane: 'pane_sewer_zone_1',
-            onEachFeature: pop_sewer_zone_1,
-            style: style_sewer_zone_1_0,
+            dataVar: 'json_RiskMap2yrsreturnperiod_1',
+            layerName: 'layer_RiskMap2yrsreturnperiod_1',
+            pane: 'pane_RiskMap2yrsreturnperiod_1',
+            onEachFeature: pop_RiskMap2yrsreturnperiod_1,
+            style: style_RiskMap2yrsreturnperiod_1_0,
         });
-        bounds_group.addLayer(layer_sewer_zone_1);
-        map.addLayer(layer_sewer_zone_1);
-        var osmGeocoder = new L.Control.Geocoder({
-            collapsed: true,
-            position: 'topleft',
-            text: 'Search',
-            title: 'Testing'
-        }).addTo(map);
-        document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
-        .className += ' fa fa-search';
-        document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
-        .title += 'Search for a place';
+        bounds_group.addLayer(layer_RiskMap2yrsreturnperiod_1);
+        map.addLayer(layer_RiskMap2yrsreturnperiod_1);
         var baseMaps = {};
-        L.control.layers(baseMaps,{'sewer_zone<br /><table><tr><td style="text-align: center;"><img src="legend/sewer_zone_1_0.png" /></td><td></td></tr><tr><td style="text-align: center;"><img src="legend/sewer_zone_1_11.png" /></td><td>1</td></tr><tr><td style="text-align: center;"><img src="legend/sewer_zone_1_22.png" /></td><td>2</td></tr><tr><td style="text-align: center;"><img src="legend/sewer_zone_1_33.png" /></td><td>3</td></tr><tr><td style="text-align: center;"><img src="legend/sewer_zone_1_44.png" /></td><td>4</td></tr><tr><td style="text-align: center;"><img src="legend/sewer_zone_1_55.png" /></td><td>5</td></tr><tr><td style="text-align: center;"><img src="legend/sewer_zone_1_66.png" /></td><td>6</td></tr><tr><td style="text-align: center;"><img src="legend/sewer_zone_1_77.png" /></td><td>7</td></tr><tr><td style="text-align: center;"><img src="legend/sewer_zone_1_88.png" /></td><td>8</td></tr><tr><td style="text-align: center;"><img src="legend/sewer_zone_1_99.png" /></td><td>9</td></tr><tr><td style="text-align: center;"><img src="legend/sewer_zone_1_1010.png" /></td><td>10</td></tr><tr><td style="text-align: center;"><img src="legend/sewer_zone_1_1111.png" /></td><td>11</td></tr><tr><td style="text-align: center;"><img src="legend/sewer_zone_1_1212.png" /></td><td>12</td></tr><tr><td style="text-align: center;"><img src="legend/sewer_zone_1_1313.png" /></td><td>13</td></tr><tr><td style="text-align: center;"><img src="legend/sewer_zone_1_1414.png" /></td><td>14</td></tr><tr><td style="text-align: center;"><img src="legend/sewer_zone_1_1515.png" /></td><td>15</td></tr><tr><td style="text-align: center;"><img src="legend/sewer_zone_1_1616.png" /></td><td>16</td></tr><tr><td style="text-align: center;"><img src="legend/sewer_zone_1_1717.png" /></td><td>17</td></tr><tr><td style="text-align: center;"><img src="legend/sewer_zone_1_1818.png" /></td><td>18</td></tr><tr><td style="text-align: center;"><img src="legend/sewer_zone_1_1919.png" /></td><td>19</td></tr><tr><td style="text-align: center;"><img src="legend/sewer_zone_1_2020.png" /></td><td>20</td></tr><tr><td style="text-align: center;"><img src="legend/sewer_zone_1_2121.png" /></td><td>21</td></tr><tr><td style="text-align: center;"><img src="legend/sewer_zone_1_2222.png" /></td><td>22</td></tr><tr><td style="text-align: center;"><img src="legend/sewer_zone_1_2323.png" /></td><td>23</td></tr><tr><td style="text-align: center;"><img src="legend/sewer_zone_1_2424.png" /></td><td>24</td></tr><tr><td style="text-align: center;"><img src="legend/sewer_zone_1_2525.png" /></td><td>25</td></tr><tr><td style="text-align: center;"><img src="legend/sewer_zone_1_2626.png" /></td><td>26</td></tr><tr><td style="text-align: center;"><img src="legend/sewer_zone_1_2727.png" /></td><td>27</td></tr><tr><td style="text-align: center;"><img src="legend/sewer_zone_1_2828.png" /></td><td>28</td></tr><tr><td style="text-align: center;"><img src="legend/sewer_zone_1_2929.png" /></td><td>29</td></tr><tr><td style="text-align: center;"><img src="legend/sewer_zone_1_3030.png" /></td><td>30</td></tr><tr><td style="text-align: center;"><img src="legend/sewer_zone_1_3131.png" /></td><td>31</td></tr><tr><td style="text-align: center;"><img src="legend/sewer_zone_1_3232.png" /></td><td>32</td></tr><tr><td style="text-align: center;"><img src="legend/sewer_zone_1_3333.png" /></td><td>33</td></tr><tr><td style="text-align: center;"><img src="legend/sewer_zone_1_3434.png" /></td><td>34</td></tr><tr><td style="text-align: center;"><img src="legend/sewer_zone_1_3535.png" /></td><td>35</td></tr><tr><td style="text-align: center;"><img src="legend/sewer_zone_1_3636.png" /></td><td>36</td></tr><tr><td style="text-align: center;"><img src="legend/sewer_zone_1_3737.png" /></td><td>37</td></tr><tr><td style="text-align: center;"><img src="legend/sewer_zone_1_3838.png" /></td><td>38</td></tr></table>': layer_sewer_zone_1,"OpenStreetMap": layer_OpenStreetMap_0,},{collapsed:false}).addTo(map);
+        L.control.layers(baseMaps,{'RiskMap - 2 yrs return period<br /><table><tr><td style="text-align: center;"><img src="legend/RiskMap2yrsreturnperiod_1_0.png" /></td><td></td></tr><tr><td style="text-align: center;"><img src="legend/RiskMap2yrsreturnperiod_1_highrisk1.png" /></td><td>high risk</td></tr><tr><td style="text-align: center;"><img src="legend/RiskMap2yrsreturnperiod_1_lowrisk2.png" /></td><td>low risk</td></tr><tr><td style="text-align: center;"><img src="legend/RiskMap2yrsreturnperiod_1_medrisk3.png" /></td><td>med risk</td></tr></table>': layer_RiskMap2yrsreturnperiod_1,"OpenStreetMap": layer_OpenStreetMap_0,},{collapsed:false}).addTo(map);
         setBounds();
         </script>
     </body>
