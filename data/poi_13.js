@@ -1,0 +1,1 @@
+var json_poi_13 = {"type":"FeatureCollection","name":"poi_13","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"id":"1","2yrs Depth":0.19,"10yr Depth":0.26,"50yr Depth":0.3,"100yrs Dep":0.31,"Location":"Lagankhel"},"geometry":{"type":"Point","coordinates":[85.323413991128874,27.667400472275414]}}]}
