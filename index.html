@@ -1,131 +1,126 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charseabout:blank#blockedt="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
-        <meta name="mobile-web-app-capable" content="yes">
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <link rel="stylesheet" href="css/leaflet.css">
-        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
-        <link rel="stylesheet" href="css/leaflet-control-geocoder.Geocoder.css">
-        <title></title>
-        <link rel="stylesheet" href="css/index_css.css">
-        <style>
-          select{
-            background-color: #ffffff;
-            color: #0e0505;
-            font-size: 16px;
-            border: 3px solid #191818;
-            padding: 8px;
-            margin-top: 50%;
-            margin-left: 50%;
-          }
-          option{
-            background-color: #ffffff;
-          }
 
-        </style>
-    </head>
+<head>
+  <meta charseabout:blank#blockedt="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="stylesheet" href="css/leaflet.css">
+  <link rel="stylesheet" href="css/qgis2web.css">
+  <link rel="stylesheet" href="css/fontawesome-all.min.css">
+  <link rel="stylesheet" href="css/leaflet-control-geocoder.Geocoder.css">
+  <title></title>
+  <link rel="stylesheet" href="css/index_css.css">
+  <style>
+    option {
+      background-color: #ffffff;
+    }
+  </style>
+</head>
 
 
-    <body>
+<body>
 
-      <div> <p> <h1>Flood Hazard Map</h1>
-      </p></div>
-        <div id="custom-select" style="width:10%">
-        <select id="display_info">
-            <optgroup label="Flood Hazard from Surface Water" >
-                <option value="extent_surface" id="extentid">Extent of flooding</option>
-                <option value="2_depth"  id="depthid" selected>2 yrs RP hazard:depth </option>
-                <option value="2_velocity" id="velocityid">2 yrs RP hazard:velocity</option>
-                <option value="10_depth" id="depthid">10 yrs RP hazard:depth </option>
-                <option value="10_velocity" id="velocityid">10 yrs RP hazard:velocity </option>
-                <option value="50_depth" id="depthid">50 yrs RP hazard:depth </option>
-                <option value="50_velocity" id="velocityid">50 yrs RP hazard:velocity </option>
-                <option value="100_depth"  id="depthid">100 yrs RP hazard:depth </option>
-                <option value="100_velocity" id="velocityid">100 yrs RP hazard:velocity </option>
-            </optgroup>
-            <optgroup label="Flood Hazard from Rivers" disabled>
-                <option>Extent of flooding</option>
-            </optgroup>
-        </select>
-        </div>
+  <div>
+    <div class="headline">Flood Risk Mapping of Patan</div>
+    </p>
+    <div id="custom-select">
+      <select id="display_info">
+        <optgroup label="Flood Hazard from Surface Water">
+          <option value="extent_surface" id="extentid">Extent of flooding</option>
+          <option value="2_depth" id="depthid" selected>2 yrs RP hazard:depth </option>
+          <option value="2_velocity" id="velocityid">2 yrs RP hazard:velocity</option>
+          <option value="10_depth" id="depthid">10 yrs RP hazard:depth </option>
+          <option value="10_velocity" id="velocityid">10 yrs RP hazard:velocity </option>
+          <option value="50_depth" id="depthid">50 yrs RP hazard:depth </option>
+          <option value="50_velocity" id="velocityid">50 yrs RP hazard:velocity </option>
+          <option value="100_depth" id="depthid">100 yrs RP hazard:depth </option>
+          <option value="100_velocity" id="velocityid">100 yrs RP hazard:velocity </option>
+        </optgroup>
+        <optgroup label="Flood Hazard from Rivers" disabled>
+          <option>Extent of flooding</option>
+        </optgroup>
+      </select>
+    </div>
+  </div>
 
-        <div id="map">
-        </div>
+  <div id="map">
+  </div>
 
-        <div class="index", id="depth">
-          <h4>Surface water flood risk: water depth scenario</h4>
-          <p>Flood depth (meter)</p>
-          <div class="very-low">
-            <div id="circle1"></div>
-            0 - 0.3m
-          </div>
-          <div class="low">
-            <div id="circle2"></div>
-            0.3 - 0.6m
-          </div>
-          <div class="medium">
-            <div id="circle3"></div>
-            0.5 - 1.0m
-          </div>
-          <div class="high">
-            <div id="circle4"></div>
-            >1.0m
-          </div>
-        </div>
-        
-        <div class="index1" id="extent">
-          <h4>Surface water flood risk : Extent of Flooding</h4>
-          <p>Return Period</p>
-          <div class="very-low">
-            <div id="circle1"></div>
-            100 yrs Return Period Flood
-          </div>
-          <div class="low">
-            <div id="circle2"></div>
-            50 yrs Return Period Flood
-          </div>
-          <div class="medium">
-            <div id="circle3"></div>
-            10 yrs Return Period Flood
-          </div>
-          <div class="high">
-            <div id="circle4"></div>
-            2 yrs Return Period Flood
-          </div>
-        </div>
+  <div class="index" id="depth">
+    <h4>Surface water flood risk: water depth scenario</h4>
+    <p>Flood depth (meter)</p>
+    <div class="very-low">
+      <div id="circle1"></div>
+      0 - 0.3m
+    </div>
+    <div class="low">
+      <div id="circle2"></div>
+      0.3 - 0.6m
+    </div>
+    <div class="medium">
+      <div id="circle3"></div>
+      0.5 - 1.0m
+    </div>
+    <div class="high">
+      <div id="circle4"></div>
+      >1.0m
+    </div>
+  </div>
 
-        <div class="index2" id="velocity">
-          <h4>Surface water flood risk: water velocity scenario</h4>
-          <p>Flood velocity (meters per second)</p>
-          <div class="low">
-            <div id="circle_low"></div>
-            velocity less than 1.5 m/s
-          </div>
-          <div class="high">
-            <div id="circle_high"></div>
-            velocity more than 1.5 m/s
-          </div>
-        </div>
+  <div class="index1" id="extent">
+    <h4>Surface water flood risk : Extent of Flooding</h4>
+    <p>Return Period</p>
+    <div class="very-low">
+      <div id="circle1"></div>
+      100 yrs Return Period Flood
+    </div>
+    <div class="low">
+      <div id="circle2"></div>
+      50 yrs Return Period Flood
+    </div>
+    <div class="medium">
+      <div id="circle3"></div>
+      10 yrs Return Period Flood
+    </div>
+    <div class="high">
+      <div id="circle4"></div>
+      2 yrs Return Period Flood
+    </div>
+  </div>
 
-        
-        
-        
+  <div class="index2" id="velocity">
+    <h4>Surface water flood risk: water velocity scenario</h4>
+    <p>Flood velocity (meters per second)</p>
+    <div class="low">
+      <div id="circle_low"></div>
+      velocity less than 1.5 m/s
+    </div>
+    <div class="high">
+      <div id="circle_high"></div>
+      velocity more than 1.5 m/s
+    </div>
+  </div>
 
-  
-    </body>
-    <script src="js/qgis2web_expressions.js"></script>
-        <script src="js/leaflet.js"></script>
-        <script src="js/leaflet.rotatedMarker.js"></script>
-        <script src="js/leaflet.pattern.js"></script>
-        <script src="js/leaflet-hash.js"></script>
-        <script src="js/Autolinker.min.js"></script>
-        <script src="js/rbush.min.js"></script>
-        <script src="js/labelgun.min.js"></script>
-        <script src="js/labels.js"></script>
-        <script src="js/leaflet-control-geocoder.Geocoder.js"></script>
-        <script src="js/sampurna.js"></script>
-        <script src="data/poi_13.js"></script>
+
+
+
+
+
+</body>
+<script src="js/qgis2web_expressions.js"></script>
+<script src="js/leaflet.js"></script>
+<script src="js/leaflet.rotatedMarker.js"></script>
+<script src="js/leaflet.pattern.js"></script>
+<script src="js/leaflet-hash.js"></script>
+<script src="js/Autolinker.min.js"></script>
+<script src="js/rbush.min.js"></script>
+<script src="js/labelgun.min.js"></script>
+<script src="js/labels.js"></script>
+<script src="js/leaflet-control-geocoder.Geocoder.js"></script>
+<script src="js/sampurna.js"></script>
+<script src="data/poi_13.js"></script>
+
 </html>

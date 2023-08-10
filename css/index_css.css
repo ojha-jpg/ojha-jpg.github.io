@@ -1,33 +1,70 @@
-*{
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+* {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    font-family: 'Josefin Sans', sans-serif;
+    font-family: 'Open Sans', sans-serif;
 }
 
 
-
-h1{
-    top:2%;
-    font-weight:bold;
+.headline {
+    display: flex;
     text-align: center;
+    font-weight: bold;
+    font-size: 30px;
+    color: white;
+    background-color: #1F6E8C;
+    height: 10vh;
+    align-items: center;
+    justify-content: center;
 }
-.custom-select{
 
-}
-.heading{
-    padding-left: 10%;
-    margin-top: 3%;
+.custom-select {}
+
+#display_info {
+    background-color: #ffffff;
+    color: #0e0505;
+    font-size: 16px;
+    border: 3px solid #191818;
+    width: 250px;
+    margin-left: 5%;
+    margin-top: 3vh;
+    margin-bottom: 2px;
+    padding: 5px;
 }
 
-#map{
-    position:absolute;
+#map {
+display: block;
     width: 90%;
-    height: 60%;
+    height: 55vh;
     left: 5%;
     border: 1px solid #191818;
-    max-height: 50vh;
-    max-width: 140vh;
+    /*max-height: 50vh;
+    max-width: 190vh; */
+}
+
+@media only screen and (max-width: 400px) {
+    .headline {
+        font-size: 20px;
+    }
+    #display_info {
+        font-size: 14px;
+        width: 200px;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    .headline {
+        font-size: 25px;
+    }
+    #display_info {
+        font-size: 15px;
+        width: 250px;
+    }
+    #map{
+        height: 50vh;
+    }
 }
 
 .index {
@@ -42,28 +79,36 @@ h1{
     position: absolute;
     text-decoration: none;
     top: 75%;
-    left: 40%;
-    display:block ;
+    left: 6%;
+    display: block;
 }
 
 .index2 {
     position: absolute;
     text-decoration: none;
     top: 75%;
-    left: 70%;
-    display:block ;
+    left: 6%;
+    display: block;
 }
 
-.index ul li{
+.index ul li {
     /* text-decoration: none; */
 }
 
-.very-low,.low,.medium,.high{
+.very-low,
+.low,
+.medium,
+.high {
     display: flex;
     padding-top: 2px;
 }
 
-#circle1, #circle2, #circle3,#circle4,#circle_high,#circle_low{
+#circle1,
+#circle2,
+#circle3,
+#circle4,
+#circle_high,
+#circle_low {
     border-radius: 50%;
     width: 25px;
     height: 25px;
@@ -73,19 +118,23 @@ h1{
 #circle1 {
     background: #4782ba;
 }
+
 #circle2 {
     background: #2255a1;
 }
+
 #circle3 {
     background: #1b3b8f;
 }
+
 #circle4 {
     background: #04096b;
 }
 
-#circle_high{
+#circle_high {
     background-color: #2e4595;
 }
-#circle_low{
+
+#circle_low {
     background-color: #84a4c4;
 }
